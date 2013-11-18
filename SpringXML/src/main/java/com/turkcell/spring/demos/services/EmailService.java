@@ -29,7 +29,7 @@ public class EmailService implements ApplicationEventPublisherAware {
 			
 		}
 		
-		System.out.println("Sent mail successfully!");
+		System.out.println("Sent mail successfully : " + address);
 		// send email normally..
 	}
 	

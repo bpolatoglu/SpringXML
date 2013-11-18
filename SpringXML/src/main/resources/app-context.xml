@@ -38,7 +38,7 @@
 	
 	<!--  custom scope service -->
 	<bean id="employeeDAO" class="com.turkcell.spring.demos.dao.EmployeeDAO" scope="myThread" init-method="init"/>
-	<bean id="employeeService" class="com.turkcell.spring.demos.services.EmployeeService" p:employeeDAO-ref="employeeDAO" />
+	<bean id="employeeService" class="com.turkcell.spring.demos.services.EmployeeService" p:employeeDAO-ref="employeeDAO" p:employeeValidator-ref="employeeValidator" />
 	<bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
 		<property name="scopes">
 			<map>
@@ -49,6 +49,37 @@
 		</property>
 	</bean>
 	
+	<!--  custom event example -->
+	<bean id="emailService" class="com.turkcell.spring.demos.services.EmailService">
+		<property name="blackList">
+			<list>
+				<value>ulkeroz@gmail.com</value>
+				<value>abc@gmail.com</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="blackListNotifier" class="com.turkcell.spring.demos.event.BlackListNotifier">
+		<property name="notificationAddress" value="ulker.ciftci@turkcellteknoloji.com.tr"/>
+	</bean>
+
+	<!--  validator example -->	
+	<bean id="employeeValidator" class="com.turkcell.spring.demos.validation.EmployeeValidator" />
+	<bean id="addressValidator" class="com.turkcell.spring.demos.validation.AddressValidator" />
+	<bean id="customerValidator" class="com.turkcell.spring.demos.validation.CustomerValidator" c:addressValidator-ref="addressValidator" />
+
+<!--  custom property editor -->
+	<bean id="accountNameTypeBuilder" class="com.turkcell.spring.demos.propertyeditor.AccountNameTypeBuilder">
+		<property name="accountNameType" value="thisisaccountname"/>
+	</bean>
+	<bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+		<property name="customEditors">
+			<map>
+				<entry key="com.turkcell.spring.demos.propertyeditor.AccountNameType" 
+					value="com.turkcell.spring.demos.propertyeditor.AccountNameTypeEditor"/>
+			</map>
+		</property>
+	</bean>
+
 
 </beans>
  

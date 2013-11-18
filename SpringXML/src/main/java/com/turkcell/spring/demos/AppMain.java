@@ -46,19 +46,25 @@ public class AppMain {
 		EmployeeService employeeService = context.getBean(EmployeeService.class);
 		employeeService.selectAllEmployees();
 		
-		/*
+		
 		// custom event
 		EmailService emailService = context.getBean(EmailService.class);
 		emailService.sendEmail("ulker.ozgen@gmail.com", "deneme 1-2");
-		emailService.sendEmail("ulkeroz@gmail.com", "deneme 1-2");
+		emailService.sendEmail("abc@gmail.com", "deneme 1-2");
+		
 		
 		// validation example
 		employeeService.save(new Employee());
+		Employee e = new Employee();
+		e.setName("aa");
+		e.setAge(123);
+		employeeService.save(e);
+		
 		
 		// custom property editor
 		AccountNameTypeBuilder accountNameTypeBuilder = context.getBean(AccountNameTypeBuilder.class);
 		accountNameTypeBuilder.getAccountNameType();
-		*/
+		
 		
 		// finally close context..
 		context.close();

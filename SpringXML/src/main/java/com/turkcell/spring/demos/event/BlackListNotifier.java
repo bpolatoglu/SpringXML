@@ -7,6 +7,7 @@ public class BlackListNotifier implements ApplicationListener<ApplicationEvent>{
 
 	private String notificationAddress;
 	
+	
 	public void onApplicationEvent(ApplicationEvent event) {
 		if (event instanceof BlackListEvent) {
 			System.out.println("Event occured! ");
