@@ -26,6 +26,10 @@ public class AccountService implements ApplicationContextAware {
 		this.accountDAOBeanName = accountDAOBeanName;
 	}
 	
+	public void setAccountDAO(AccountDAO accountDAO) {
+		this.accountDAO = accountDAO;
+	}
+	
 	@Override
 	public String toString() {
 		return new StringBuilder("this is account service & tableName:").append(accountDAO.getTableName()).toString();

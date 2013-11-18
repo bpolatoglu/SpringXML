@@ -1,5 +1,6 @@
 package com.turkcell.spring.demos.services;
 
+import com.sun.org.apache.xml.internal.security.Init;
 import com.turkcell.spring.demos.dao.BankDAO;
 import com.turkcell.spring.demos.dao.CustomerDAO;
 
@@ -24,5 +25,11 @@ public class BankService {
 
 	public void setCustomerDAO(CustomerDAO customerDAO) {
 		this.customerDAO = customerDAO;
+	}
+	
+	
+	@SuppressWarnings("unused")
+	private void init() {
+		System.out.println("starting BankService..");
 	}
 }

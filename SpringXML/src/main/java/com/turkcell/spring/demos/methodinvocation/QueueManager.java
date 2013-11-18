@@ -5,12 +5,12 @@ public abstract class QueueManager {
 	private Queue queue;
 	
 	public void addToQueue() {
-		Queue asyncQueue = createQueue();
+		Queue asyncQueue = createAsyncQueue();
 		asyncQueue.increase();
 		queue.increase();
 	}
 	
-	protected abstract Queue createQueue();
+	protected abstract Queue createAsyncQueue();
 	
 	public Queue getQueue() {
 		return queue;
