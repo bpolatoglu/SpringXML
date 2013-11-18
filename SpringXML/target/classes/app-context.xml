@@ -8,35 +8,47 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 		http://www.springframework.org/schema/context 				http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-
-	<bean id="accountDAO" class="com.turkcell.spring.demos.dao.AccountDAO" p:tableName="T_ACCOUNT"/>
-	<bean id="bankDAO" class="com.turkcell.spring.demos.dao.BankDAO" p:tableName="T_BANK" init-method="init" />
-	<bean id="customerDAO" class="com.turkcell.spring.demos.dao.CustomerDAO" p:tableName="T_CUSTOMER" />
-	
-	<bean id="accountService" class="com.turkcell.spring.demos.services.AccountService" p:accountDAO-ref="accountDAO" 
-			 />
-
-	<bean id="customerService" class="com.turkcell.spring.demos.services.CustomerService" 
-			p:available="true" p:customerDAO-ref="customerDAO" init-method="init" depends-on="bankService"/>	
-	
+	<context:component-scan base-package="com.turkcell.spring.demos" />
 	
 	<bean id="bankService" class="com.turkcell.spring.demos.services.BankService" 
-				c:bankDAO-ref="bankDAO" c:customerDAO-ref="customerDAO" 
-				init-method="init"/>
+			c:customerDAO-ref="customerDAO" c:bankDAO-ref="bankDAO" />
 
-	<bean id="endOfDayService" class="com.turkcell.spring.demos.services.EndOfDayService" init-method="init" 
-			lazy-init="true"/>
-
-	
-	<!--  method invocation example -->
-
-	<bean id="queue" class="com.turkcell.spring.demos.methodinvocation.Queue" p:name="singleton-one"/>
-	<bean id="asyncQueue" class="com.turkcell.spring.demos.methodinvocation.AsyncQueue" p:name="prototype-one" 
-			scope="prototype" />
-	<bean id="queueManager" class="com.turkcell.spring.demos.methodinvocation.QueueManager" p:queue-ref="queue">
-		<lookup-method bean="asyncQueue" name="createAsyncQueue"/>
+	<bean id="customerService" class="com.turkcell.spring.demos.services.CustomerService" 
+			init-method="init" depends-on="customerDAO"
+		 	p:accountDAO-ref="accountDAO" p:customerDAO-ref="customerDAO" p:available="true"/>
+		 		 	
+	<bean id="accountService" class="com.turkcell.spring.demos.services.AccountService" init-method="init">
+		<property name="accountDAOBeanName">
+			<idref bean="accountDAO"/>
+		</property>
 	</bean>
 
+	<bean id="bankDAO" class="com.turkcell.spring.demos.dao.BankDAO" 			p:tableName="T_BANK"/>
+	<bean id="customerDAO" class="com.turkcell.spring.demos.dao.CustomerDAO"	p:tableName="T_CUSTOMER" init-method="init"/>
+	<bean id="accountDAO" class="com.turkcell.spring.demos.dao.AccountDAO" 	p:tableName="T_ACCOUNT" />
+
+	<bean id="endOfDayService" class="com.turkcell.spring.demos.services.EndOfDayService" lazy-init="true" init-method="init" />
+	
+	<!--  method injection example -->
+	<bean id="queueManager" class="com.turkcell.spring.demos.methodinvocation.QueueManager" p:queue-ref="queue">
+		<lookup-method name="createAsyncQueue" bean="asyncQueue" />
+	</bean>
+	<bean id="queue" class="com.turkcell.spring.demos.methodinvocation.Queue" p:name="normal" init-method="init" />
+	<bean id="asyncQueue" class="com.turkcell.spring.demos.methodinvocation.Queue" p:name="async" scope="prototype" init-method="init" />
+	
+	<!--  custom scope service -->
+	<bean id="employeeDAO" class="com.turkcell.spring.demos.dao.EmployeeDAO" scope="myThread" init-method="init"/>
+	<bean id="employeeService" class="com.turkcell.spring.demos.services.EmployeeService" p:employeeDAO-ref="employeeDAO" />
+	<bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
+		<property name="scopes">
+			<map>
+				<entry key="myThread">
+					<bean class="com.turkcell.spring.demos.conf.MyThreadScope"/>
+				</entry>
+			</map>
+		</property>
+	</bean>
+	
 
 </beans>
  

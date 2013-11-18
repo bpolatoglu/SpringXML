@@ -17,10 +17,8 @@ public class EmployeeService {
 	private EmployeeValidator employeeValidator;
 	
 	public void selectAllEmployees() {
-		List<Employee> selectAll = employeeDAO.selectAll();
-		for (Employee employee : selectAll) {
-			System.out.println(employee.getName());
-		}
+		List<Employee> list = employeeDAO.selectAll();
+		System.out.println("Employee List Size:" + list.size());
 	}
 	
 	public void save(Employee employee){

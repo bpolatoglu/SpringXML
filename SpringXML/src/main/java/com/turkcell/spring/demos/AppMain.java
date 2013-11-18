@@ -21,45 +21,32 @@ public class AppMain {
 				new ClassPathXmlApplicationContext(new String [] {"classpath:app-context.xml"});
 		// method invocation
 
-		QueueManager queueManager = context.getBean(QueueManager.class);
-		queueManager.addToQueue();
-		queueManager.addToQueue();
-		queueManager.addToQueue();
-			
-		
-		/*
+	
 		CustomerService customerService = (CustomerService) context.getBean(CustomerService.class);
-		System.out.println("1" + customerService);
+		System.out.println("1: " + customerService);
 		
 		BankService bankBean = (BankService) context.getBean(BankService.class);
-		System.out.println("2" + bankBean);
-		
-		EndOfDayService endOfDayService = context.getBean(EndOfDayService.class);
-		System.out.println("3" + endOfDayService);
-		
-
-	
-		
-
-		AccountService accountService = (AccountService) context.getBean("accountService");
-		System.out.println(accountService);
-	
-		
-		
+		System.out.println("2: " + bankBean);
+				
 		AccountService accountService = context.getBean(AccountService.class);
 		System.out.println(accountService);
 		
 		EndOfDayService endOfDayService = context.getBean(EndOfDayService.class);
 		System.out.println(endOfDayService);
 		
-			
+		// method invocation
+		QueueManager queueManager = context.getBean(QueueManager.class);
+		queueManager.addToQueue();
+		queueManager.addToQueue();
+		queueManager.addToQueue();
+		
 		// custom scope
 		Scope threadScope = new MyThreadScope();
 		context.getBeanFactory().registerScope("myThread", threadScope);
 		EmployeeService employeeService = context.getBean(EmployeeService.class);
 		employeeService.selectAllEmployees();
 		
-		
+		/*
 		// custom event
 		EmailService emailService = context.getBean(EmailService.class);
 		emailService.sendEmail("ulker.ozgen@gmail.com", "deneme 1-2");
@@ -68,11 +55,11 @@ public class AppMain {
 		// validation example
 		employeeService.save(new Employee());
 		
-		// custom property ediyor
+		// custom property editor
 		AccountNameTypeBuilder accountNameTypeBuilder = context.getBean(AccountNameTypeBuilder.class);
 		accountNameTypeBuilder.getAccountNameType();
-		
 		*/
+		
 		// finally close context..
 		context.close();
 		
